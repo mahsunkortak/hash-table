@@ -9,7 +9,8 @@ int flag = 0;
    
   };
   struct linked_list* root[128];
- 
+  struct linked_list* hash[128];
+
   void hash_table(char* person_name){
    char first_letter = person_name[0];
   if (flag == 0)
@@ -26,22 +27,26 @@ int flag = 0;
 
   if(root[mod_first_letter] == NULL)
   {
-    printf("hhhhhhh");
+ 
+  root[mod_first_letter] = (struct linked_list*)malloc(sizeof(struct linked_list));
   root[mod_first_letter]->data_name = person_name;
   root[mod_first_letter]->next = NULL;
-  printf("cajjjj \n %s",root[61]->data_name);
+  hash[mod_first_letter] = (struct linked_list*)malloc(sizeof(struct linked_list));
+  hash[mod_first_letter]->data_name = person_name;
+  hash[mod_first_letter]->next = NULL;
   }
 
   else if(root[mod_first_letter] != NULL)
   {
-
-    while(root[mod_first_letter]->next != NULL )
+    struct linked_list* iter;
+    iter = root[mod_first_letter];
+    while(iter->next != NULL )
     {
-      root[mod_first_letter] = root[mod_first_letter]->next;
+      iter= iter->next;
     }
-    root[mod_first_letter]->next = (struct linked_list*)malloc(sizeof(struct linked_list));
-    root[mod_first_letter]->next->data_name = person_name;
-    root[mod_first_letter]->next->next = NULL;
+    iter->next = (struct linked_list*)malloc(sizeof(struct linked_list));
+    iter->next->data_name = person_name;
+    iter->next->next = NULL;
 
   }
   else
@@ -52,29 +57,46 @@ int flag = 0;
 }
 void search_and_list(char key)
 {
+  struct linked_list* iter;
   int keyy = (int)(key);
   keyy = key % hash_table_size;
-  while( root[keyy]->next != NULL )
+  iter = root[keyy];
+  if(iter != NULL)
   {
-    printf("index:%d dictionary: %s",root[keyy]->data_name);
-    root[keyy] = root[keyy]->next ;
+  printf("index:%d dictionary: %s\n",keyy,iter->data_name);
+  iter = iter->next;
+  while( iter != NULL )
+  {
+    printf("index:%d dictionary: %s\n",keyy,iter->data_name);
+    iter = iter->next ;
   }
-  printf("burdayım!!");
+  }
+  else{
+
+    printf("There isn't word with start by this key! ");
+  }
+ 
 }
 
 int main(){
-  printf("dsssssssssssss");
-  
-  
-hash_table("ali");
-hash_table("veli");
-hash_table("selami");
-hash_table("ayse");
-hash_table("samed");
-hash_table("ahmt");
-printf("cajjjj \n %d",root[114]->data_name);
-//search_and_list('a');
 
+hash_table("ali");
+hash_table("buse");
+hash_table("ayse");
+hash_table("banu");
+hash_table("amed");
+hash_table("berkcan");
+hash_table("ahmt");
+hash_table("sudenaz");
+
+
+hash_table("alican");
+hash_table("sudenaz");
+hash_table("aaaaaaaa");
+
+
+search_and_list('a');
+search_and_list('b');
 
 return 0;
 }
