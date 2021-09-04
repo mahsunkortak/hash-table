@@ -97,6 +97,6 @@ hash_table("aaaaaaaa");
 
 search_and_list('a');
 search_and_list('b');
-
+search_and_list('s');
 return 0;
 }
